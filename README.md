@@ -1,18 +1,18 @@
-DracFun is a Slimefun4 addon that tries it's best to recreate the amazing Draconic evolution
-Mod ([link](https://www.curseforge.com/minecraft/mc-mods/draconic-evolution)) in Vanilla Minecraft.
-This Addon is still very Early and may have problems if you have any report them in the Issues tab.
-I'll be running this addon on my server sbdragons.ml in the survival gamemode if you want to try it out first [YOU WILL STILL NEED TO GRIND UP TO IT]
+# 龙之研究
+DracFun是一个Slimefun4插件，它尽最大努力重现惊人的龙进化  
+它参考了龙之研究Mod ([链接](https://www.curseforge.com/minecraft/mc-mods/draconic-evolution))
+该附属尚处在早期，还有很多地方需要完善，欢迎大家来完善
 
-## Features include:
-* Alot of new Materials
-* Armor that creates energy shield
-* Fusion Crafting
-* New Recipes
+## 未来计划:
+* 新材料
+* 护甲技能
+* 更多合成
+* 新配方
 
-## Requirements
+## 前置
 * [Slimefun 4](https://github.com/TheBusyBiscuit/Slimefun4)
 * [Holographic Displays](https://dev.bukkit.org/projects/holographic-displays)
 * [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/)
 
-## Download
-You can find the downloads for each version with their release notes in the [releases page](https://github.com/lidanthedev/DracFun/releases).
+## 下载
+你可以在此下载[releases](https://github.com/lidanthedev/DracFun/releases).
