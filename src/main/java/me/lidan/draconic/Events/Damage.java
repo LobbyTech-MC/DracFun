@@ -1,10 +1,5 @@
 package me.lidan.draconic.Events;
 
-import de.slikey.effectlib.EffectLib;
-import de.slikey.effectlib.effect.CircleEffect;
-import me.lidan.draconic.Draconic;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -16,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.time.LocalDateTime;
+import me.lidan.draconic.Draconic;
 
 public class Damage implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)

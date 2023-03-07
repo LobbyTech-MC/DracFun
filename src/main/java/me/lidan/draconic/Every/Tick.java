@@ -1,18 +1,15 @@
 package me.lidan.draconic.Every;
 
-import me.lidan.draconic.Draconic;
+import static me.lidan.draconic.Draconic.bars;
+import static me.lidan.draconic.Draconic.vars;
+
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static me.lidan.draconic.Draconic.bars;
-import static me.lidan.draconic.Draconic.vars;
+import me.lidan.draconic.Draconic;
 
 public class Tick extends BukkitRunnable {
     @Override

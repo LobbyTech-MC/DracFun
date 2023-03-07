@@ -1,22 +1,43 @@
 package me.lidan.draconic;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.util.RayTraceResult;
+
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
-import de.slikey.effectlib.effect.CircleEffect;
 import de.slikey.effectlib.effect.SphereEffect;
-import de.slikey.effectlib.util.DynamicLocation;
-import io.github.mooy1.infinitylib.commands.AddonCommand;
-import io.github.mooy1.infinitylib.common.CoolDowns;
 import io.github.mooy1.infinitylib.common.Scheduler;
 import io.github.mooy1.infinitylib.core.AbstractAddon;
 import io.github.mooy1.infinitylib.core.AddonConfig;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -26,11 +47,10 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.generators.SolarGenerator;
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.machines.ChargingBench;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
-import me.lidan.draconic.Commands.aiflycmd;
 import me.lidan.draconic.Commands.DraconicCmd;
+import me.lidan.draconic.Commands.aiflycmd;
 import me.lidan.draconic.Database.Database;
 import me.lidan.draconic.Events.Damage;
 import me.lidan.draconic.Events.Death;
@@ -38,27 +58,13 @@ import me.lidan.draconic.Events.Interact;
 import me.lidan.draconic.Every.DraconicHoloLoad;
 import me.lidan.draconic.Every.Tick;
 import me.lidan.draconic.Fusion.FusionCrafting;
+import me.lidan.draconic.Other.DraconicArmorPiece;
 import me.lidan.draconic.Other.ElectroBlock;
 import me.lidan.draconic.Other.ErrorFile;
 import me.lidan.draconic.Other.Serializer;
-import me.lidan.draconic.Other.DraconicArmorPiece;
+import net.guizhanss.guizhanlibplugin.updater.GuizhanBuildsUpdaterWrapper;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.boss.BossBar;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.RayTraceResult;
-
-import java.lang.reflect.InvocationTargetException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.*;
 
 public final class Draconic extends AbstractAddon {
     // private static Draconic instance = null;
@@ -76,9 +82,10 @@ public final class Draconic extends AbstractAddon {
     public static EffectManager effectManager;
 
     public Draconic() {
-        super("LidanTheDev", "DracFun", "master", "autoupdate");
+        super("LidanTheDev", "DracFun", "master", "options.auto-update");
     }
 
+    
     public static Draconic getInstance() {
         final Draconic i = instance();
         if (i == null)
@@ -92,13 +99,16 @@ public final class Draconic extends AbstractAddon {
 
     @Override
     public void enable() {
-        // Plugin startup logic
-        try {
-            cfg = new AddonConfig(this.getDataFolder().getPath() + "/config.yml");
-        } catch(Exception error){
-            getLogger().severe("Error happened when loading config");
-            error.printStackTrace();
+
+    	if (!new File(getDataFolder(), "config.yml").exists()) {
+            saveDefaultConfig();
         }
+    	
+    	if (getConfig().getBoolean("options.auto-update") && getDescription().getVersion().startsWith("Build")) {
+            GuizhanBuildsUpdaterWrapper.start(this, getFile(), "SlimefunGuguProject", "DracFun", "master",
+                false);
+        }
+    	
         try {
             setup();
 
@@ -437,7 +447,7 @@ public final class Draconic extends AbstractAddon {
                     recipe);
             slimeitem.register(this);
         }
-        SlimefunItemStack DRAGON_HEART = (SlimefunItemStack) SlimefunItem.getById("DRAGON_HEART").getItem();
+        SlimefunItem.getById("DRAGON_HEART").getItem();
 
         if(SlimefunItem.getById("WYVERN_HELMET") == null){
             SlimefunItemStack itemStack = new SlimefunItemStack("WYVERN_HELMET", Material.LEATHER_HELMET,
@@ -575,8 +585,7 @@ public final class Draconic extends AbstractAddon {
                     recipe);
             slimeitem.register(this);
         }
-        SlimefunItemStack AWAKENED_CORE =
-                (SlimefunItemStack) SlimefunItem.getById("AWAKENED_CORE").getItem();
+        SlimefunItem.getById("AWAKENED_CORE").getItem();
 
         if(SlimefunItem.getById("DRACONIC_ENERGY_CORE") == null){
             SlimefunItemStack draconic_energy_core = new SlimefunItemStack("DRACONIC_ENERGY_CORE",
@@ -592,8 +601,7 @@ public final class Draconic extends AbstractAddon {
                     recipe);
             slimeitem.register(this);
         }
-        SlimefunItemStack DRACONIC_ENERGY_CORE =
-                (SlimefunItemStack) SlimefunItem.getById("DRACONIC_ENERGY_CORE").getItem();
+        SlimefunItem.getById("DRACONIC_ENERGY_CORE").getItem();
 
         Color DraconicColor = Color.fromRGB(245, 158, 7);
         if(SlimefunItem.getById("DRACONIC_HELMET") == null){
@@ -978,7 +986,7 @@ public final class Draconic extends AbstractAddon {
     }
 
     public static ArrayList<Block> loopblockscube(Location center,int size){
-        long now = System.currentTimeMillis();
+        System.currentTimeMillis();
         ArrayList<Block> blocks = new ArrayList<Block>();
         int X = center.getBlockX();
         int Y = center.getBlockY();

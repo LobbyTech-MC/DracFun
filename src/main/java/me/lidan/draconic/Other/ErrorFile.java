@@ -1,12 +1,12 @@
 package me.lidan.draconic.Other;
 
-import me.lidan.draconic.Draconic;
-import org.bukkit.Bukkit;
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
+import me.lidan.draconic.Draconic;
 
 public class ErrorFile {
     private static File file;

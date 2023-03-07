@@ -1,8 +1,21 @@
 package me.lidan.draconic.Other;
 
+import static me.lidan.draconic.Fusion.FusionCrafting.cooldowns;
+import static me.lidan.draconic.Fusion.FusionCrafting.createFusionHolo;
+import static me.lidan.draconic.Fusion.FusionCrafting.lockedBlocks;
+import static me.lidan.draconic.Fusion.FusionCrafting.openInventory1;
+
+import java.util.HashMap;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemSetting;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -11,20 +24,8 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.lidan.draconic.Database.Database;
 import me.lidan.draconic.Draconic;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.Optional;
-
-import static me.lidan.draconic.Fusion.FusionCrafting.*;
+import me.lidan.draconic.Database.Database;
 
 public class ElectroBlock extends SlimefunItem implements EnergyNetComponent {
     int capacity;

@@ -1,9 +1,9 @@
 package me.lidan.draconic.Other;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 
 public class aiflyholo extends BukkitRunnable {
     int i = 0;
