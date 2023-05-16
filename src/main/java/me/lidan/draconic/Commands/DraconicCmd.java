@@ -20,9 +20,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.RayTraceResult;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-
 import me.lidan.draconic.Draconic;
 import me.lidan.draconic.Database.Database;
 import me.lidan.draconic.Fusion.FusionCrafting;

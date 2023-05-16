@@ -3,7 +3,7 @@ package me.lidan.draconic.Other;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 
 public class aiflyholo extends BukkitRunnable {
     int i = 0;
