@@ -48,10 +48,7 @@ import me.lidan.draconic.Other.EnergyBreaker;
 import me.lidan.draconic.Other.aiflyholo;
 
 public class FusionCrafting implements Listener, CommandExecutor{
-
-	private static HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
-    private static HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
-    
+ 
     public static final RecipeType TYPE = new RecipeType(Draconic.createKey("Fusion_Crafting"),SlimefunItem.getById(
             "FUSION_CORE").getItem());
 
@@ -338,6 +335,9 @@ public class FusionCrafting implements Listener, CommandExecutor{
             Draconic.giveItem(p,item);
             Database.delete(blockloc);
             
+            HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+            HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+            
             for (Hologram holo : hologramapi.getHolograms()) {
                 double distance = holo.getPosition().toLocation().distance(e.getBlock().getLocation());
                 if (distance < 2.5d) {
@@ -437,6 +437,8 @@ public class FusionCrafting implements Listener, CommandExecutor{
         if (checkRecipe(items,recipename)){
             // p.sendMessage("Recipe work! " + recipename);
             EnergyBreaker breaker = new EnergyBreaker();
+            HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+            HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
             Hologram craftingHologram = hologramapi.createHologram(hololoc);
             TextHologramLine line1 = craftingHologram.getLines().appendText("&6充能中 %");
             line1.setText("&6充能 0%");
@@ -480,6 +482,8 @@ public class FusionCrafting implements Listener, CommandExecutor{
                     
                     if (energyGot >= totalEnergy) {
                         craftingHologram.delete();
+                        HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+                        HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
                         for (Hologram holo : hologramapi.getHolograms()) {
                             if (holo.getPosition().toLocation().distance(blockloc) < 5) {
                                 // holo.getLocation().subtract();
@@ -502,6 +506,8 @@ public class FusionCrafting implements Listener, CommandExecutor{
                         new BukkitRunnable() {
                             @Override
                             public void run() {
+                            	HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+                                HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
                                 for (Hologram holo : hologramapi.getHolograms()) {
                                     if (holo.getPosition().toLocation().distance(oblockloc) < 5) {
                                         holo.delete();
@@ -643,6 +649,8 @@ public class FusionCrafting implements Listener, CommandExecutor{
         HashMap<String,Object> blockdata = Database.select(loc);
         if (blockdata.size() == 0) return;
         loc.add(0.5, above,0.5);
+        HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+        HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
         for (Hologram holo: hologramapi.getHolograms()) {
             if (holo.getPosition().toLocation().distance(loc) < 1)
             {

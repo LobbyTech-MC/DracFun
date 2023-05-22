@@ -70,8 +70,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 public final class Draconic extends AbstractAddon {
     // private static Draconic instance = null;
     private static String connectionUrl;
-	private static HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
-    private static HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+	
     
     public static HashMap<Player,BossBar> bars = new HashMap<>();
     // public static HashMap<Location,HashMap<String,Object>> blockdata = new HashMap<>();
@@ -101,6 +100,7 @@ public final class Draconic extends AbstractAddon {
         return connectionUrl;
     }
 
+    
     @SuppressWarnings("deprecation")
 	@Override
     public void enable() {
@@ -291,6 +291,9 @@ public final class Draconic extends AbstractAddon {
             }
         }
         
+        
+        HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+        HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
         
         for (Hologram holo: hologramapi.getHolograms()) {
             holo.delete();

@@ -28,10 +28,7 @@ import me.lidan.draconic.Fusion.FusionCrafting;
 import me.lidan.draconic.Other.ErrorFile;
 
 public class DraconicCmd implements CommandExecutor {
-	
-	private static HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
-    private static HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
-    
+	  
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
         if (sender == null){
@@ -172,6 +169,9 @@ public class DraconicCmd implements CommandExecutor {
             }
             else if(args[0].equalsIgnoreCase("showblockswithholo")){
                 ArrayList<Hologram> holos = new ArrayList<>();
+                
+                HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+                HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
                 
                 for (Location loc : lastselectall.keySet()) {
                     p.sendBlockChange(loc, Material.ORANGE_TERRACOTTA.createBlockData());
