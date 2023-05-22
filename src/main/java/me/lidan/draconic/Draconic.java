@@ -29,8 +29,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI
+
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.effect.SphereEffect;
@@ -48,6 +47,9 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.electric.generato
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.machines.ChargingBench;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
 import me.lidan.draconic.Commands.DraconicCmd;
 import me.lidan.draconic.Commands.aiflycmd;
 import me.lidan.draconic.Database.Database;
@@ -68,6 +70,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 public final class Draconic extends AbstractAddon {
     // private static Draconic instance = null;
     private static String connectionUrl;
+	private static HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+    private static HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+    
     public static HashMap<Player,BossBar> bars = new HashMap<>();
     // public static HashMap<Location,HashMap<String,Object>> blockdata = new HashMap<>();
     public static HashMap<String,Double> vars = new HashMap<>();
@@ -96,7 +101,8 @@ public final class Draconic extends AbstractAddon {
         return connectionUrl;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void enable() {
 
     	if (!new File(getDataFolder(), "config.yml").exists()) {
@@ -284,7 +290,9 @@ public final class Draconic extends AbstractAddon {
                 bars.get(p).removeAll();
             }
         }
-        for (Hologram holo: HologramsAPI.getHolograms(this)) {
+        
+        
+        for (Hologram holo: hologramapi.getHolograms()) {
             holo.delete();
         }
         Slimefun.getRegistry().getAllItemGroups().remove(DraconicGroup);

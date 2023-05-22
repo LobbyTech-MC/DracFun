@@ -38,6 +38,10 @@ import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
+import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
 import me.lidan.draconic.Draconic;
 import me.lidan.draconic.Database.Database;
 import me.lidan.draconic.Other.EnergyBreaker;
@@ -45,6 +49,9 @@ import me.lidan.draconic.Other.aiflyholo;
 
 public class FusionCrafting implements Listener, CommandExecutor{
 
+	private static HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+    private static HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+    
     public static final RecipeType TYPE = new RecipeType(Draconic.createKey("Fusion_Crafting"),SlimefunItem.getById(
             "FUSION_CORE").getItem());
 
@@ -85,6 +92,7 @@ public class FusionCrafting implements Listener, CommandExecutor{
      */
 
     public static HashMap<Location, Location> connectedInjectors = new HashMap<>();
+    
 
     public static boolean viewRecipe(Player p,ItemStack item){
         for (String recipe: recipes.keySet()) {
@@ -279,7 +287,7 @@ public class FusionCrafting implements Listener, CommandExecutor{
         new BukkitRunnable() {
             @Override
             public void run() {
-                long now = System.currentTimeMillis();
+                System.currentTimeMillis();
                 Location blockloc = (Location) Draconic.allvars.get("openinv::" + p.getName());
                 HashMap<String,Object> blockdata = Database.select(blockloc);
                 // p.sendMessage("prepare in " + (System.currentTimeMillis() - now));
@@ -329,8 +337,9 @@ public class FusionCrafting implements Listener, CommandExecutor{
             }
             Draconic.giveItem(p,item);
             Database.delete(blockloc);
-            for (Hologram holo : HologramsAPI.getHolograms(Draconic.getInstance())) {
-                double distance = holo.getLocation().distance(e.getBlock().getLocation());
+            
+            for (Hologram holo : hologramapi.getHolograms()) {
+                double distance = holo.getPosition().toLocation().distance(e.getBlock().getLocation());
                 if (distance < 2.5d) {
                     holo.delete();
                     break;
@@ -372,9 +381,7 @@ public class FusionCrafting implements Listener, CommandExecutor{
         }
         else if (invname.contains("§b注入器合成")){
             Location blockloc = ((Location) Draconic.allvars.get("openinv::" + p.getName())).clone();
-            // p.sendMessage("invname = " + invname + " rawslot " + e.getRawSlot() +
-            //        " slot " + e.getSlot());
-            ItemStack olditem = p.getOpenInventory().getItem(22);
+            p.getOpenInventory().getItem(22);
 
             if (e.getRawSlot() >= 0 && e.getRawSlot() <= 53) { // clicked inside inventory
                 if (e.getRawSlot() != 22) {
@@ -426,13 +433,14 @@ public class FusionCrafting implements Listener, CommandExecutor{
         lockConnectedInjectors(oblockloc);
         lockedBlocks.put(oblockloc,-1d);
         HashMap<String,Object> blockdata = Database.select(oblockloc);
+        
         if (checkRecipe(items,recipename)){
             // p.sendMessage("Recipe work! " + recipename);
             EnergyBreaker breaker = new EnergyBreaker();
-            Hologram craftingHologram = HologramsAPI.createHologram(Draconic.getInstance(), hololoc);
-            TextLine line1 = craftingHologram.appendTextLine("&6Charging %");
+            Hologram craftingHologram = hologramapi.createHologram(hololoc);
+            TextHologramLine line1 = craftingHologram.getLines().appendText("&6充能中 %");
             line1.setText("&6充能 0%");
-            TextLine line2 = craftingHologram.appendTextLine("&6EN/MAXEN ");
+            TextHologramLine line2 = craftingHologram.getLines().appendText("&6EN/MAXEN ");
             line2.setText("&a0/1M &7J &e⚡");
             new BukkitRunnable(){
                 int energyGot = 0;
@@ -469,10 +477,11 @@ public class FusionCrafting implements Listener, CommandExecutor{
                     if (percentloaded != 0){
                         lockedBlocks.put(oblockloc,percentloaded);
                     }
+                    
                     if (energyGot >= totalEnergy) {
                         craftingHologram.delete();
-                        for (Hologram holo : HologramsAPI.getHolograms(Draconic.getInstance())) {
-                            if (holo.getLocation().distance(blockloc) < 5) {
+                        for (Hologram holo : hologramapi.getHolograms()) {
+                            if (holo.getPosition().toLocation().distance(blockloc) < 5) {
                                 // holo.getLocation().subtract();
                                 new aiflyholo(holo, blockloc, 5000).runTaskTimer(Draconic.getInstance(), 0, 1);
                                 // new (e,p.getLocation(),1000).runTaskTimer(Draconic.getInstance(),0,1);
@@ -493,8 +502,8 @@ public class FusionCrafting implements Listener, CommandExecutor{
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                for (Hologram holo : HologramsAPI.getHolograms(Draconic.getInstance())) {
-                                    if (holo.getLocation().distance(oblockloc) < 5) {
+                                for (Hologram holo : hologramapi.getHolograms()) {
+                                    if (holo.getPosition().toLocation().distance(oblockloc) < 5) {
                                         holo.delete();
                                         // new (e,p.getLocation(),1000).runTaskTimer(Draconic.getInstance(),0,1);
                                     }
@@ -634,21 +643,21 @@ public class FusionCrafting implements Listener, CommandExecutor{
         HashMap<String,Object> blockdata = Database.select(loc);
         if (blockdata.size() == 0) return;
         loc.add(0.5, above,0.5);
-        for (Hologram holo: HologramsAPI.getHolograms(Draconic.getInstance())) {
-            if (holo.getLocation().distance(loc) < 1)
+        for (Hologram holo: hologramapi.getHolograms()) {
+            if (holo.getPosition().toLocation().distance(loc) < 1)
             {
                 holo.delete();
                 break;
             }
         }
-        Hologram hologram = HologramsAPI.createHologram(Draconic.getInstance(), loc);
+        Hologram hologram = hologramapi.createHologram(loc);
         // TextLine textLine = hologram.appendTextLine("Injector");
         if(blockdata.get("item") == null){
             return;
         }
         ItemStack item = (ItemStack) blockdata.get("item");
         if (item.getAmount() > 0) {
-            ItemLine itemline = hologram.appendItemLine(item);
+            hologram.getLines().appendItem(item);
         }
     }
 

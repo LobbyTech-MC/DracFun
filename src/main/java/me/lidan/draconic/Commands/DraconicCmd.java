@@ -17,15 +17,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.RayTraceResult;
 
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
 import me.lidan.draconic.Draconic;
 import me.lidan.draconic.Database.Database;
 import me.lidan.draconic.Fusion.FusionCrafting;
 import me.lidan.draconic.Other.ErrorFile;
 
 public class DraconicCmd implements CommandExecutor {
+	
+	private static HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+    private static HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+    
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
         if (sender == null){
@@ -110,7 +116,7 @@ public class DraconicCmd implements CommandExecutor {
                 p.playSound(p.getLocation(), Sound.valueOf(args[1]),1F,Float.parseFloat(args[2]));
             }
             else if(args[0].equalsIgnoreCase("selectAll")) {
-                BukkitTask bukkitRunnable = new BukkitRunnable() {
+                new BukkitRunnable() {
 
                     @Override
                     public void run() {
@@ -122,14 +128,6 @@ public class DraconicCmd implements CommandExecutor {
                                 e.printStackTrace();
                             }
                         }
-                        HashMap<Location, HashMap<String, Object>> blockdata = lastselectall;
-                        /*for (HashMap.Entry<Location, HashMap<String, Object>> entry : blockdata.entrySet()) {
-                            System.out.printf("Blockdata for: %s",entry.getKey());
-                            for (HashMap.Entry<String, Object> entry2 : entry.getValue().entrySet()) {
-                                System.out.println("Key = " + entry2.getKey() +
-                                        ", Value = " + entry2.getValue());
-                            }
-                        }*/
                     }
                 }.runTaskAsynchronously(Draconic.getInstance());
             }
@@ -137,10 +135,7 @@ public class DraconicCmd implements CommandExecutor {
                 Database.selectAllAndDelete();
             }
             else if(args[0].equalsIgnoreCase("select")) {
-                HashMap<String,Object> blockdata = Database.select(Draconic.getTargetBlock(p).getLocation());
-                // for (HashMap.Entry<String,Object> entry : blockdata.entrySet())
-                    /*System.out.println("Key = " + entry.getKey() +
-                            ", Value = " + entry.getValue());*/
+                Database.select(Draconic.getTargetBlock(p).getLocation());
             }
             else if(args[0].equalsIgnoreCase("delete")) {
                 Database.delete(Draconic.getTargetBlock(p).getLocation());
@@ -154,7 +149,7 @@ public class DraconicCmd implements CommandExecutor {
                 p.sendMessage("" + lch.getColor());
             }
             else if(args[0].equalsIgnoreCase("hideentity")) {
-                Double raysize = Double.parseDouble(args[1]);
+                Double.parseDouble(args[1]);
                 Predicate<Entity> filter = i -> (i != p);
                 RayTraceResult ray = p.getWorld().rayTraceEntities(p.getEyeLocation(),
                         p.getEyeLocation().getDirection(),
@@ -177,16 +172,17 @@ public class DraconicCmd implements CommandExecutor {
             }
             else if(args[0].equalsIgnoreCase("showblockswithholo")){
                 ArrayList<Hologram> holos = new ArrayList<>();
+                
                 for (Location loc : lastselectall.keySet()) {
                     p.sendBlockChange(loc, Material.ORANGE_TERRACOTTA.createBlockData());
-                    Hologram holo = HologramsAPI.createHologram(Draconic.getInstance(),loc);
+                    Hologram holo = hologramapi.createHologram(loc);
                     holos.add(holo);
                     HashMap<String, Object> text = lastselectall.get(loc);
                     if (text == null) {
-                        holo.appendTextLine("null");
+                        holo.getLines().appendText("null");
                     }
                     else {
-                        holo.appendTextLine(text.toString());
+                        holo.getLines().appendText(text.toString());
                     }
 
                 }

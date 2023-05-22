@@ -25,13 +25,13 @@ public class aiflyholo extends BukkitRunnable {
         this.duration = duration;
 
         this.times = duration/50;
-        this.x1 = e.getLocation().getX();
+        this.x1 = e.getPosition().getX();
         double x2 = loc.getX();
 
-        this.y1 = e.getLocation().getY();
+        this.y1 = e.getPosition().getY();
         double y2 = loc.getY();
 
-        this.z1 = e.getLocation().getZ();
+        this.z1 = e.getPosition().getZ();
         double z2 = loc.getZ();
 
         this.dx = x2 - x1;
@@ -51,8 +51,8 @@ public class aiflyholo extends BukkitRunnable {
             mx = x1 + dx / times * i;
             my = y1 + dy / times * i;
             mz = z1 + dz / times * i;
-            tploc = new Location(e.getWorld(), mx, my, mz);
-            e.teleport(tploc);
+            tploc = new Location(e.getPosition().toLocation().getWorld(), mx, my, mz);
+            e.setPosition(tploc);
             i++;
             if (i > times) {
                 // System.out.println("aiflyholo done for " + e);
