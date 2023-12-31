@@ -63,7 +63,6 @@ import me.lidan.draconic.Other.DraconicArmorPiece;
 import me.lidan.draconic.Other.ElectroBlock;
 import me.lidan.draconic.Other.ErrorFile;
 import me.lidan.draconic.Other.Serializer;
-import net.guizhanss.guizhanlibplugin.updater.GuizhanBuildsUpdaterWrapper;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -109,10 +108,12 @@ public final class Draconic extends AbstractAddon {
             saveDefaultConfig();
         }
     	
+    	/*
     	if (getConfig().getBoolean("options.auto-update") && getDescription().getVersion().startsWith("Build")) {
             GuizhanBuildsUpdaterWrapper.start(this, getFile(), "SlimefunGuguProject", "DracFun", "master",
                 false);
         }
+    	*/
     	
         try {
             setup();
