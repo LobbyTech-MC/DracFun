@@ -748,7 +748,7 @@ public class FusionCrafting implements Listener, CommandExecutor{
     public static void onInvOpen(InventoryOpenEvent e){
         Player p = (Player) e.getPlayer();
         InventoryView view = e.getView();
-        if (view.getTitle().contains("粘液科技指南")){
+        if (view.getTitle().contains("Slimefun guide")){
             // p.sendMessage("Slime fun guide!");
             // p.sendMessage("slot 10 " + view.getItem(10));
             // p.sendMessage("core " + SlimefunItem.getById("FUSION_CORE").getItem());
