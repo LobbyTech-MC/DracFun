@@ -3,7 +3,7 @@ package me.lidan.draconic.Other;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 
 public class aiflyholo extends BukkitRunnable {
     int i = 0;
@@ -25,13 +25,13 @@ public class aiflyholo extends BukkitRunnable {
         this.duration = duration;
 
         this.times = duration/50;
-        this.x1 = e.getPosition().getX();
+        this.x1 = e.getLocation().getX();
         double x2 = loc.getX();
 
-        this.y1 = e.getPosition().getY();
+        this.y1 = e.getLocation().getY();
         double y2 = loc.getY();
 
-        this.z1 = e.getPosition().getZ();
+        this.z1 = e.getLocation().getZ();
         double z2 = loc.getZ();
 
         this.dx = x2 - x1;
@@ -51,8 +51,8 @@ public class aiflyholo extends BukkitRunnable {
             mx = x1 + dx / times * i;
             my = y1 + dy / times * i;
             mz = z1 + dz / times * i;
-            tploc = new Location(e.getPosition().toLocation().getWorld(), mx, my, mz);
-            e.setPosition(tploc);
+            tploc = new Location(e.getLocation().getWorld(), mx, my, mz);
+            e.setLocation(tploc);
             i++;
             if (i > times) {
                 // System.out.println("aiflyholo done for " + e);

@@ -30,7 +30,7 @@ public class Death implements Listener {
                     if (item.isDead()){
                         cancel();
                     }
-                    item.getWorld().spawnParticle(Particle.REDSTONE,item.getLocation(),50, 2,2,2,dustOptions);
+                    item.getWorld().spawnParticle(Particle.DUST,item.getLocation(),50, 2,2,2,dustOptions);
                 }
             }.runTaskTimer(Draconic.getInstance(),0,1);
         }

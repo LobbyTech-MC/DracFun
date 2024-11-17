@@ -33,6 +33,8 @@ import com.comphenix.protocol.events.PacketContainer;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.effect.SphereEffect;
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.DecentHologramsAPI;
 import io.github.mooy1.infinitylib.common.Scheduler;
 import io.github.mooy1.infinitylib.core.AbstractAddon;
 import io.github.mooy1.infinitylib.core.AddonConfig;
@@ -47,9 +49,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.electric.generato
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.machines.ChargingBench;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 import me.lidan.draconic.Commands.DraconicCmd;
 import me.lidan.draconic.Commands.aiflycmd;
 import me.lidan.draconic.Database.Database;
@@ -293,11 +293,12 @@ public final class Draconic extends AbstractAddon {
         }
         
         
-        HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
-        HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
-        
-        for (Hologram holo: hologramapi.getHolograms()) {
-            holo.delete();
+        //HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
+        //HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+        for (Hologram holo: DecentHologramsAPI.get().getHologramManager().getHolograms()) {
+        	if (holo.getName().startsWith("Draconic_")) {
+        		holo.delete();
+        	}
         }
         Slimefun.getRegistry().getAllItemGroups().remove(DraconicGroup);
         System.out.println("Draconic Evolution Unloaded");

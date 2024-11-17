@@ -49,7 +49,7 @@ public class Damage implements Listener {
                 }
                 // Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 0, 0), 1.0F);
                 //  = ((float) dustOptions.getColor().asRGB());
-                Draconic.createCircle(p.getLocation().clone().add(0,1,0),1.5f, Particle.REDSTONE,2,particledata);
+                Draconic.createCircle(p.getLocation().clone().add(0,1,0),1.5f, Particle.DUST,2,particledata);
                 shield = shield - e.getDamage()*multi;
                 if (shield < 0){
                     shield = 0d;

@@ -19,9 +19,10 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.DecentHolograms;
+import eu.decentsoftware.holograms.api.DecentHologramsAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 import me.lidan.draconic.Draconic;
 import me.lidan.draconic.Database.Database;
 import me.lidan.draconic.Fusion.FusionCrafting;
@@ -170,19 +171,19 @@ public class DraconicCmd implements CommandExecutor {
             else if(args[0].equalsIgnoreCase("showblockswithholo")){
                 ArrayList<Hologram> holos = new ArrayList<>();
                 
-                HolographicDisplaysAPIProvider impl = HolographicDisplaysAPIProvider.getImplementation();
-                HolographicDisplaysAPI hologramapi = impl.getHolographicDisplaysAPI(Draconic.getInstance());
+                //DecentHolograms impl = DecentHologramsAPI.get();
+                //DHAPI hologramapi = impl.getHologramManager().registerHologram(null);
                 
                 for (Location loc : lastselectall.keySet()) {
                     p.sendBlockChange(loc, Material.ORANGE_TERRACOTTA.createBlockData());
-                    Hologram holo = hologramapi.createHologram(loc);
+                    Hologram holo = DHAPI.createHologram("Draconic_" + loc.hashCode(), loc, false);
                     holos.add(holo);
                     HashMap<String, Object> text = lastselectall.get(loc);
                     if (text == null) {
-                        holo.getLines().appendText("null");
+                    	DHAPI.addHologramLine(holo, "null");
                     }
                     else {
-                        holo.getLines().appendText(text.toString());
+                    	DHAPI.addHologramLine(holo, text.toString());
                     }
 
                 }

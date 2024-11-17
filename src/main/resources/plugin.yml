@@ -10,7 +10,7 @@ commands:
   draconic:
     usage: /<command>
 depend:
-  - HolographicDisplays
+  - DecentHolograms
   - Slimefun
   - ProtocolLib
   - GuizhanLibPlugin
