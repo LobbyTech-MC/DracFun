@@ -122,8 +122,8 @@ public final class Draconic extends AbstractAddon {
             getLogger().severe("Error happened when loading items");
             error.printStackTrace();
         }
-        if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
-            getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
+        if (!Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
+            getLogger().severe("*** DecentHolograms is not installed or not enabled. ***");
             getLogger().severe("*** This plugin will be disabled. ***");
             this.setEnabled(false);
             return;
