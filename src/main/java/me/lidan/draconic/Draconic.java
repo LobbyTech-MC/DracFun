@@ -33,8 +33,8 @@ import com.comphenix.protocol.events.PacketContainer;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.effect.SphereEffect;
-import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.DecentHologramsAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 import io.github.mooy1.infinitylib.common.Scheduler;
 import io.github.mooy1.infinitylib.core.AbstractAddon;
 import io.github.mooy1.infinitylib.core.AddonConfig;
@@ -49,7 +49,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.electric.generato
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.machines.ChargingBench;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
 import me.lidan.draconic.Commands.DraconicCmd;
 import me.lidan.draconic.Commands.aiflycmd;
 import me.lidan.draconic.Database.Database;

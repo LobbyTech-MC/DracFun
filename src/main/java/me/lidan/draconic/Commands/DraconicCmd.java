@@ -20,8 +20,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 
 import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.DecentHolograms;
-import eu.decentsoftware.holograms.api.DecentHologramsAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import me.lidan.draconic.Draconic;
 import me.lidan.draconic.Database.Database;

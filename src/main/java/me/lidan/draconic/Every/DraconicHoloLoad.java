@@ -1,12 +1,13 @@
 package me.lidan.draconic.Every;
 
-import me.lidan.draconic.Database.Database;
-import me.lidan.draconic.Draconic;
-import me.lidan.draconic.Fusion.FusionCrafting;
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
+import me.lidan.draconic.Draconic;
+import me.lidan.draconic.Database.Database;
+import me.lidan.draconic.Fusion.FusionCrafting;
 
 public class DraconicHoloLoad extends BukkitRunnable {
     @Override
