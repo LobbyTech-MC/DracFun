@@ -1,5 +1,7 @@
 package me.lidan.draconic.Events;
 
+import static me.lidan.draconic.Draconic.vars;
+
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -28,7 +30,11 @@ public class Damage implements Listener {
             }
             Player p = (Player)e.getEntity();
             Double damage = e.getFinalDamage();
-            Double shield = (Double)Draconic.vars.get("shield::" + p.getName());
+            Double shield = 0d;
+            if (vars.get("shield::" + p.getName()) == null) {
+            	shield = 0d;
+            }
+            shield = (Double)Draconic.vars.get("shield::" + p.getName());
             Double mshield = (Double)Draconic.vars.get("maxshield::" + p.getName());
             Double percentshield = shield/mshield*100;
             Double ov = (Double)Draconic.vars.get("overload::" + p.getName());
