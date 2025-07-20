@@ -30,14 +30,16 @@ public class Damage implements Listener {
             Double damage = e.getFinalDamage();
             Double shield = 0d;
             shield = (Double)Draconic.vars.get("shield::" + p.getName());
-            Double mshield = (Double)Draconic.vars.get("maxshield::" + p.getName());
             if (shield == null) {
-            	shield = 0d;
+            	return;
             }
-            Double percentshield = 0d;
+            Double mshield = (Double)Draconic.vars.get("maxshield::" + p.getName());
             if (mshield == null) {
-            	mshield = 0d;
-            } else {
+            	return;
+            }
+            
+            Double percentshield = 0d;
+            if (mshield != null) {
             	percentshield = shield/mshield*100;
             }
             
