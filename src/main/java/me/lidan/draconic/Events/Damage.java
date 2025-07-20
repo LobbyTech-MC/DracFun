@@ -36,7 +36,13 @@ public class Damage implements Listener {
             if (shield == null) {
             	shield = 0d;
             }
-            Double percentshield = shield/mshield*100;
+            Double percentshield = 0d;
+            if (mshield == null) {
+            	mshield = 0d;
+            } else {
+            	percentshield = shield/mshield*100;
+            }
+            
             Double ov = (Double)Draconic.vars.get("overload::" + p.getName());
             Double en = (Double)Draconic.vars.get("energy::" + p.getName());
             if (shield + 0 > 0 && !e.isCancelled()) {
