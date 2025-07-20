@@ -99,8 +99,7 @@ public final class Draconic extends AbstractAddon {
     }
 
     
-    @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public void enable() {
 
     	if (!new File(getDataFolder(), "config.yml").exists()) {

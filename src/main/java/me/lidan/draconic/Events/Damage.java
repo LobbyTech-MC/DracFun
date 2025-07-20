@@ -1,7 +1,5 @@
 package me.lidan.draconic.Events;
 
-import static me.lidan.draconic.Draconic.vars;
-
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
